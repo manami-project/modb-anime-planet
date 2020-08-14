@@ -16,6 +16,6 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.github.manamiproject:modb-anime-planet:$version")
+    implementation("io.github.manamiproject:modb-anime-planet:$version")
 }
 ```
