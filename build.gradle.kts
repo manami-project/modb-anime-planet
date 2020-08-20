@@ -17,12 +17,12 @@ version = project.findProperty("releaseVersion") as String? ?: ""
 val projectName = "modb-anime-planet"
 
 dependencies {
-    api("io.github.manamiproject:modb-core:2.1.1")
     api(kotlin("stdlib-jdk8"))
+    api("io.github.manamiproject:modb-core:2.1.1")
 
     implementation("org.jsoup:jsoup:1.13.1")
 
-    testImplementation("io.github.manamiproject:modb-test:1.0.1")
+    testImplementation("io.github.manamiproject:modb-test:1.0.2")
 }
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
