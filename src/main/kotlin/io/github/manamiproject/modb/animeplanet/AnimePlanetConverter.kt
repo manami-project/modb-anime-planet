@@ -22,9 +22,9 @@ import java.net.URL
  */
 class AnimePlanetConverter(private val config: MetaDataProviderConfig = AnimePlanetConfig) : AnimeConverter {
 
-    override fun convert(source: String): Anime {
+    override fun convert(rawContent: String): Anime {
 
-        val document = Jsoup.parse(source)
+        val document = Jsoup.parse(rawContent)
         val picture = extractPicture(document)
 
         return Anime(
