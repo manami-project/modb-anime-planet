@@ -18,7 +18,7 @@ val projectName = "modb-anime-planet"
 
 dependencies {
     api(kotlin("stdlib-jdk8"))
-    api("io.github.manamiproject:modb-core:2.1.2")
+    api("io.github.manamiproject:modb-core:2.2.0")
 
     implementation("org.jsoup:jsoup:1.13.1")
 
