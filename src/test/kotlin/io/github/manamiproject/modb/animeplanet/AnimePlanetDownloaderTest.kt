@@ -2,6 +2,7 @@ package io.github.manamiproject.modb.animeplanet
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.stubbing.Scenario.STARTED
 import io.github.manamiproject.modb.core.config.AnimeId
 import io.github.manamiproject.modb.core.config.FileSuffix
 import io.github.manamiproject.modb.core.config.Hostname
@@ -111,5 +112,55 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
 
         // then
         assertThat(result).hasMessage("Response body was blank for [animePlanetId=1535] with response code [200]")
+    }
+
+    @Test
+    fun `pause and retry on response code 502`() {
+        // given
+        val id = 1535
+
+        val testAnimePlanetConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
+            override fun hostname(): Hostname = "localhost"
+            override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+            override fun buildDataDownloadUrl(id: String): URL = URL("http://localhost:$port/anime/$id")
+            override fun fileSuffix(): FileSuffix = AnimePlanetConfig.fileSuffix()
+        }
+
+        serverInstance.stubFor(
+                get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs(STARTED)
+                        .willSetStateTo("successful retrieval")
+                        .willReturn(
+                                aResponse()
+                                        .withHeader("Content-Type", "text/html")
+                                        .withStatus(502)
+                                        .withBody("<html></html>")
+                        )
+        )
+
+        val responseBody = "<html><head/><body></body></html>"
+
+        serverInstance.stubFor(
+                get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs("successful retrieval")
+                        .willReturn(
+                                aResponse()
+                                        .withHeader("Content-Type", APPLICATION_JSON)
+                                        .withStatus(200)
+                                        .withBody(responseBody)
+                        )
+        )
+
+        val downloader = AnimePlanetDownloader(testAnimePlanetConfig)
+
+        // when
+        val result = downloader.download(id.toString()) {
+            shouldNotBeInvoked()
+        }
+
+        // then
+        assertThat(result).isEqualTo(responseBody)
     }
 }
