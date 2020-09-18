@@ -20,7 +20,7 @@ import java.net.URL
  * @since 1.0.0
  * @param config Configuration for converting data.
  */
-class AnimePlanetConverter(private val config: MetaDataProviderConfig = AnimePlanetConfig) : AnimeConverter {
+public class AnimePlanetConverter(private val config: MetaDataProviderConfig = AnimePlanetConfig) : AnimeConverter {
 
     override fun convert(rawContent: String): Anime {
 
@@ -141,7 +141,7 @@ class AnimePlanetConverter(private val config: MetaDataProviderConfig = AnimePla
             .map { config.buildAnimeLinkUrl(it) }
     }
 
-    companion object {
+    private companion object {
         private val NO_PIC = URL("https://anime-planet.com/inc/img/blank_main.jpg")
     }
 }

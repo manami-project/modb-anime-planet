@@ -16,7 +16,7 @@ import io.github.manamiproject.modb.core.random
  * @param config Configuration for downloading data.
  * @param httpClient To actually download the anime data.
  */
-class AnimePlanetDownloader(
+public class AnimePlanetDownloader(
     private val config: MetaDataProviderConfig,
     private val httpClient: HttpClient = DefaultHttpClient()
 ) : Downloader {
@@ -51,7 +51,7 @@ class AnimePlanetDownloader(
         RetryableRegistry.register(config.hostname(), retryBehaviorConfig)
     }
 
-    companion object {
+    private companion object {
         private val log by LoggerDelegate()
     }
 }

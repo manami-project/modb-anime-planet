@@ -8,7 +8,7 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
  * Configuration for downloading and converting anime data from anime-planet.com
  * @since 1.0.0
  */
-object AnimePlanetConfig : MetaDataProviderConfig {
+public object AnimePlanetConfig : MetaDataProviderConfig {
 
     override fun fileSuffix(): FileSuffix = "html"
 
