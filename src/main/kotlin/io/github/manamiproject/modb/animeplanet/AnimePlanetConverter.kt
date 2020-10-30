@@ -2,6 +2,7 @@ package io.github.manamiproject.modb.animeplanet
 
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
+import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.models.Anime
 import io.github.manamiproject.modb.core.models.Anime.Status.UNKNOWN
 import io.github.manamiproject.modb.core.models.Anime.Type
@@ -44,7 +45,16 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
         }
     }
 
-    private fun extractTitle(document: Document): String = document.select("h1[itemprop=name]").text().trim()
+    private fun extractTitle(document: Document): String {
+        var title = document.select("h1[itemprop=name]").text().trim()
+
+        if (title.contains(TITLE_CONTAINING_AT_CHAR)) {
+            val jsonld = document.select("script[type=application/ld+json]").html().toString()
+            title = Regex("\"name\":\"(?<title>.*?)\"").find(jsonld)?.groups?.get("title")?.value ?: EMPTY
+        }
+
+        return title
+    }
 
     private fun extractEpisodes(document: Document): Episodes {
         return document.select("span[class=type]").text().let {
@@ -124,7 +134,16 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
     }
 
     private fun extractSynonyms(document: Document): List<String> {
-        val alternativeTitle = document.select("h2[class=aka]").text().replace("Alt title:", "").trim()
+        var alternativeTitle = document.select("h2[class=aka]").text().replace("Alt title:", "").trim()
+
+        if (alternativeTitle.contains(TITLE_CONTAINING_AT_CHAR)) {
+            val jsonld = document.select("script[type=application/ld+json]").html().toString()
+            alternativeTitle = Regex("\"alternateName\":\\[\"(?<alternativeTitle>.*?)\"\\]").find(jsonld)
+                    ?.groups
+                    ?.get("alternativeTitle")
+                    ?.value
+                    ?: EMPTY
+        }
 
         return listOf(alternativeTitle)
     }
@@ -143,5 +162,6 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
 
     private companion object {
         private val NO_PIC = URL("https://anime-planet.com/inc/img/blank_main.jpg")
+        private const val TITLE_CONTAINING_AT_CHAR= "[email protected]"
     }
 }

@@ -39,6 +39,25 @@ internal class AnimePlanetConverterTest {
             // then
             assertThat(result.title).isEqualTo("PriPara Movie: Minna no Akogare♪ Let's Go☆Prix Paris")
         }
+
+        @Test
+        fun `extract title from jsonld if it was replaces by 'email protected'`() {
+            // given
+            val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = AnimePlanetConfig.hostname()
+                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+            }
+
+            val testFileContent = loadTestResource("file_converter_tests/title/title_replaced_by_email_protected.html")
+
+            val converter = AnimePlanetConverter(testAnimePlanetConfig)
+
+            // when
+            val result = converter.convert(testFileContent)
+
+            // then
+            assertThat(result.title).isEqualTo("Malice@Doll")
+        }
     }
 
     @Nested
@@ -642,6 +661,25 @@ internal class AnimePlanetConverterTest {
 
             // then
             assertThat(result.synonyms).isEmpty()
+        }
+
+        @Test
+        fun `extract synonym from jsonld if it was replaces by 'email protected'`() {
+            // given
+            val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = AnimePlanetConfig.hostname()
+                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+            }
+
+            val testFileContent = loadTestResource("file_converter_tests/synonyms/synonyms_replaced_by_email_protected.html")
+
+            val converter = AnimePlanetConverter(testAnimePlanetConfig)
+
+            // when
+            val result = converter.convert(testFileContent)
+
+            // then
+            assertThat(result.synonyms).containsExactly("GJ Club@")
         }
     }
 
