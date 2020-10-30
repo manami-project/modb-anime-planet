@@ -19,5 +19,5 @@ jobs:
           java-version: 11
       - name: Set executable flag on gradlew
         run: chmod +x gradlew
-      - name: Execute tests
-        run: ./gradlew bintrayUpload -PreleaseVersion=$RELEASE_VERSION -PbintrayUser=manami-project -PbintrayApiKey=${{ secrets.BINTRAY_API_KEY }}
+      - name: Execute tests and upload release to bintray
+        run: ./gradlew test bintrayUpload -PreleaseVersion=$RELEASE_VERSION -PbintrayUser=manami-project -PbintrayApiKey=${{ secrets.BINTRAY_API_KEY }}
