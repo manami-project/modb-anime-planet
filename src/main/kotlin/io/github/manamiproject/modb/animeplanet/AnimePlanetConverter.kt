@@ -53,6 +53,10 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
             title = Regex("\"name\":\"(?<title>.*?)\"").find(jsonld)?.groups?.get("title")?.value ?: EMPTY
         }
 
+        if (title.isBlank()) {
+            title = document.select("meta[property=og:title]").attr("content")
+        }
+
         return title
     }
 

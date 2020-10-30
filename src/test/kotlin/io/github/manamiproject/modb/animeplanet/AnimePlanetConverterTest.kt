@@ -58,6 +58,25 @@ internal class AnimePlanetConverterTest {
             // then
             assertThat(result.title).isEqualTo("Malice@Doll")
         }
+
+        @Test
+        fun `extract title from meta tag if it was replaces by 'email protected' and jsonld does not exist`() {
+            // given
+            val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = AnimePlanetConfig.hostname()
+                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+            }
+
+            val testFileContent = loadTestResource("file_converter_tests/title/title_replaced_by_email_protected_no_jsonld.html")
+
+            val converter = AnimePlanetConverter(testAnimePlanetConfig)
+
+            // when
+            val result = converter.convert(testFileContent)
+
+            // then
+            assertThat(result.title).isEqualTo("The iDOLM@STER Million Live!")
+        }
     }
 
     @Nested
