@@ -138,18 +138,32 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
     }
 
     private fun extractSynonyms(document: Document): List<String> {
-        var alternativeTitle = document.select("h2[class=aka]").text().replace("Alt title:", "").trim()
+        val heading = document.select("h2[class=aka]").text()
 
-        if (alternativeTitle.contains(TITLE_CONTAINING_AT_CHAR)) {
+        val alternativeTitles = mutableListOf<String>()
+
+        when {
+            heading.startsWith(SINGLE_SYNONYM) -> alternativeTitles.add(heading.replace(SINGLE_SYNONYM, EMPTY).trim())
+            heading.startsWith(MULTIPLE_SYNONYMS) -> heading.replace(MULTIPLE_SYNONYMS, EMPTY).
+                split(',')
+                .map { it.trim() }
+                .forEach { alternativeTitles.add(it) }
+        }
+
+        if (alternativeTitles.any { it.contains(TITLE_CONTAINING_AT_CHAR) }) {
+            alternativeTitles.removeIf { it.contains(TITLE_CONTAINING_AT_CHAR) }
+
             val jsonld = document.select("script[type=application/ld+json]").html().toString()
-            alternativeTitle = Regex("\"alternateName\":\\[\"(?<alternativeTitle>.*?)\"\\]").find(jsonld)
+            alternativeTitles.add(
+                    Regex("\"alternateName\":\\[\"(?<alternativeTitle>.*?)\"\\]").find(jsonld)
                     ?.groups
                     ?.get("alternativeTitle")
                     ?.value
                     ?: EMPTY
+            )
         }
 
-        return listOf(alternativeTitle)
+        return alternativeTitles
     }
 
     private fun extractTags(document: Document): List<String> {
@@ -167,5 +181,7 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
     private companion object {
         private val NO_PIC = URL("https://anime-planet.com/inc/img/blank_main.jpg")
         private const val TITLE_CONTAINING_AT_CHAR= "[email protected]"
+        private const val SINGLE_SYNONYM = "Alt title:"
+        private const val MULTIPLE_SYNONYMS = "Alt titles:"
     }
 }

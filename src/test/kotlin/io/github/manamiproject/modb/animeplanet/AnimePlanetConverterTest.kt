@@ -700,6 +700,27 @@ internal class AnimePlanetConverterTest {
             // then
             assertThat(result.synonyms).containsExactly("GJ Club@")
         }
+
+        @Test
+        fun `extract multiple synonyms`() {
+            // given
+            val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = AnimePlanetConfig.hostname()
+                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+            }
+
+            val testFileContent = loadTestResource("file_converter_tests/synonyms/multiple_synonyms.html")
+
+            val converter = AnimePlanetConverter(testAnimePlanetConfig)
+
+            // when
+            val result = converter.convert(testFileContent)
+
+            // then
+            assertThat(result.synonyms).containsExactly(
+                    "\"Uchuu Senkan Yamato\" to Iu Jidai: Seireki 2202-nen no Sentaku"
+            )
+        }
     }
 
     @Nested
