@@ -1,8 +1,8 @@
 package io.github.manamiproject.modb.animeplanet
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.net.URL
+import java.net.URI
 
 internal class AnimePlanetConfigTest {
 
@@ -25,27 +25,27 @@ internal class AnimePlanetConfigTest {
     }
 
     @Test
-    fun `build anime link URL correctly`() {
+    fun `build anime link correctly`() {
         // given
         val id = "black-clover"
 
         // when
-        val result = AnimePlanetConfig.buildAnimeLinkUrl(id)
+        val result = AnimePlanetConfig.buildAnimeLink(id)
 
         // then
-        assertThat(result).isEqualTo(URL("https://anime-planet.com/anime/$id"))
+        assertThat(result).isEqualTo(URI("https://anime-planet.com/anime/$id"))
     }
 
     @Test
-    fun `build data download URL correctly`() {
+    fun `build data download link correctly`() {
         // given
         val id = "black-clover"
 
         // when
-        val result = AnimePlanetConfig.buildDataDownloadUrl(id)
+        val result = AnimePlanetConfig.buildDataDownloadLink(id)
 
         // then
-        assertThat(result).isEqualTo(URL("https://anime-planet.com/anime/$id"))
+        assertThat(result).isEqualTo(URI("https://anime-planet.com/anime/$id"))
     }
 
     @Test

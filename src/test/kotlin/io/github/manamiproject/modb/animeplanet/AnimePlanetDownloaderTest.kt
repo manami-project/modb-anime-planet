@@ -18,7 +18,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.net.URL
+import java.net.URI
 
 internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
 
@@ -33,7 +33,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         // given
         val testConfig = object: MetaDataProviderConfig by AnimePlanetConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildDataDownloadUrl(id: String): URL = URL("http://localhost:$port/anime/$id")
+            override fun buildDataDownloadLink(id: String): URI = URI("http://localhost:$port/anime/$id")
         }
 
         val id = "black-clover"
@@ -63,7 +63,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         // given
         val testConfig = object: MetaDataProviderConfig by AnimePlanetConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildDataDownloadUrl(id: String): URL = URL("http://localhost:$port/anime/$id")
+            override fun buildDataDownloadLink(id: String): URI = URI("http://localhost:$port/anime/$id")
         }
 
         val id = "black-clover"
@@ -97,8 +97,8 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
 
         val testAnidbConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
-            override fun buildDataDownloadUrl(id: String): URL = URL("http://${hostname()}:$port/anime/$id")
+            override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
+            override fun buildDataDownloadLink(id: String): URI = URI("http://${hostname()}:$port/anime/$id")
             override fun fileSuffix(): FileSuffix = AnimePlanetConfig.fileSuffix()
         }
 
@@ -129,8 +129,8 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
 
         val testAnimePlanetConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
-            override fun buildDataDownloadUrl(id: String): URL = URL("http://localhost:$port/anime/$id")
+            override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
+            override fun buildDataDownloadLink(id: String): URI = URI("http://localhost:$port/anime/$id")
             override fun fileSuffix(): FileSuffix = AnimePlanetConfig.fileSuffix()
         }
 

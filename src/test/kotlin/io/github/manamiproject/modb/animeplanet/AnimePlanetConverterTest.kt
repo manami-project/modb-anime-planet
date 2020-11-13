@@ -14,7 +14,7 @@ import io.github.manamiproject.modb.test.loadTestResource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import java.net.URL
+import java.net.URI
 
 internal class AnimePlanetConverterTest {
 
@@ -26,7 +26,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/title/special_chars.html")
@@ -45,7 +45,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/title/title_replaced_by_email_protected.html")
@@ -64,7 +64,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/title/title_replaced_by_email_protected_no_jsonld.html")
@@ -87,7 +87,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/episodes/1_ep.html")
@@ -106,7 +106,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/episodes/135+_eps.html")
@@ -125,7 +125,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/episodes/25_eps.html")
@@ -144,7 +144,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/episodes/no_episode.html")
@@ -167,7 +167,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/web.html")
@@ -186,7 +186,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/tv_special.html")
@@ -205,7 +205,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/tv.html")
@@ -224,7 +224,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/ova.html")
@@ -243,7 +243,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/other.html")
@@ -262,7 +262,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/music_video.html")
@@ -281,7 +281,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/movie.html")
@@ -300,7 +300,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/dvd_special.html")
@@ -319,7 +319,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/type/no_braces.html")
@@ -342,7 +342,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/picture_and_thumbnail/picture_and_thumbnail_available.html")
@@ -362,7 +362,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html")
@@ -386,7 +386,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/status/unknown.html")
@@ -409,7 +409,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/duration/1_hour.html")
@@ -428,7 +428,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/duration/1_min.html")
@@ -447,7 +447,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/duration/2_hours.html")
@@ -466,7 +466,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/duration/2_hours_15_min.html")
@@ -485,7 +485,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/duration/10_min.html")
@@ -508,7 +508,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/anime_season/year_only.html")
@@ -527,7 +527,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/anime_season/summer.html")
@@ -546,7 +546,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/anime_season/spring.html")
@@ -565,7 +565,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/anime_season/winter.html")
@@ -584,7 +584,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/anime_season/fall.html")
@@ -603,7 +603,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/anime_season/tba.html")
@@ -626,7 +626,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/sources/id.html")
@@ -637,7 +637,7 @@ internal class AnimePlanetConverterTest {
             val result = converter.convert(testFileContent)
 
             // then
-            assertThat(result.sources).containsExactly(URL("https://anime-planet.com/anime/code-geass-lelouch-of-the-rebellion-r2"))
+            assertThat(result.sources).containsExactly(URI("https://anime-planet.com/anime/code-geass-lelouch-of-the-rebellion-r2"))
         }
     }
 
@@ -649,7 +649,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/synonyms/synonyms_available.html")
@@ -668,7 +668,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/synonyms/synonyms_not_available.html")
@@ -687,7 +687,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/synonyms/synonyms_replaced_by_email_protected.html")
@@ -706,7 +706,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/synonyms/multiple_synonyms.html")
@@ -731,7 +731,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/related_anime/same_franchise_and_other_franchise.html")
@@ -743,13 +743,13 @@ internal class AnimePlanetConverterTest {
 
             // then
             assertThat(result.relatedAnime).containsExactly(
-                URL("https://anime-planet.com/anime/fullmetal-alchemist"),
-                URL("https://anime-planet.com/anime/fullmetal-alchemist-brotherhood-4-koma-theater"),
-                URL("https://anime-planet.com/anime/fullmetal-alchemist-brotherhood-specials"),
-                URL("https://anime-planet.com/anime/fullmetal-alchemist-premium-collection"),
-                URL("https://anime-planet.com/anime/fullmetal-alchemist-reflections"),
-                URL("https://anime-planet.com/anime/fullmetal-alchemist-the-movie-conqueror-of-shamballa"),
-                URL("https://anime-planet.com/anime/fullmetal-alchemist-the-sacred-star-of-milos")
+                URI("https://anime-planet.com/anime/fullmetal-alchemist"),
+                URI("https://anime-planet.com/anime/fullmetal-alchemist-brotherhood-4-koma-theater"),
+                URI("https://anime-planet.com/anime/fullmetal-alchemist-brotherhood-specials"),
+                URI("https://anime-planet.com/anime/fullmetal-alchemist-premium-collection"),
+                URI("https://anime-planet.com/anime/fullmetal-alchemist-reflections"),
+                URI("https://anime-planet.com/anime/fullmetal-alchemist-the-movie-conqueror-of-shamballa"),
+                URI("https://anime-planet.com/anime/fullmetal-alchemist-the-sacred-star-of-milos")
             )
         }
 
@@ -758,7 +758,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/related_anime/same_franchise_only.html")
@@ -770,7 +770,7 @@ internal class AnimePlanetConverterTest {
 
             // then
             assertThat(result.relatedAnime).containsExactly(
-                URL("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-movie-mugen-train")
+                URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-movie-mugen-train")
             )
         }
 
@@ -779,7 +779,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/related_anime/no_related_anime.html")
@@ -802,7 +802,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/tags/various_tags.html")
@@ -836,7 +836,7 @@ internal class AnimePlanetConverterTest {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = AnimePlanetConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
             val testFileContent = loadTestResource("file_converter_tests/tags/no_tags.html")

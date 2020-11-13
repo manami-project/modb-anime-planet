@@ -3,18 +3,15 @@ package io.github.manamiproject.modb.animeplanet
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
 import io.github.manamiproject.modb.core.extensions.EMPTY
-import io.github.manamiproject.modb.core.models.Anime
+import io.github.manamiproject.modb.core.models.*
 import io.github.manamiproject.modb.core.models.Anime.Status.UNKNOWN
 import io.github.manamiproject.modb.core.models.Anime.Type
 import io.github.manamiproject.modb.core.models.Anime.Type.*
-import io.github.manamiproject.modb.core.models.AnimeSeason
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season.UNDEFINED
-import io.github.manamiproject.modb.core.models.Duration
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.MINUTES
-import io.github.manamiproject.modb.core.models.Episodes
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.net.URL
+import java.net.URI
 
 /**
  * Converts raw data to an [Anime].
@@ -45,7 +42,7 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
         }
     }
 
-    private fun extractTitle(document: Document): String {
+    private fun extractTitle(document: Document): Title {
         var title = document.select("h1[itemprop=name]").text().trim()
 
         if (title.contains(TITLE_CONTAINING_AT_CHAR)) {
@@ -84,27 +81,27 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
         }
     }
 
-    private fun extractPicture(document: Document): URL {
+    private fun extractPicture(document: Document): URI {
         val textValue = document.select("img[itemprop=image]").attr("src").let {
             Regex(".*?\\.jpg").find(it)?.value ?: ""
         }
 
         return if (textValue.isNotBlank()) {
             if (textValue.startsWith('/')) {
-                URL("https://${config.hostname()}$textValue")
+                URI("https://${config.hostname()}$textValue")
             } else {
-                URL("https://${config.hostname()}/$textValue")
+                URI("https://${config.hostname()}/$textValue")
             }
         } else {
             NO_PIC
         }
     }
 
-    private fun extractThumbnail(url: URL): URL {
-        return if (url == NO_PIC) {
+    private fun extractThumbnail(uri: URI): URI {
+        return if (uri == NO_PIC) {
             NO_PIC
         } else {
-            URL(url.toString().replace("/covers", "/covers/thumbs"))
+            URI(uri.toString().replace("/covers", "/covers/thumbs"))
         }
     }
 
@@ -131,13 +128,13 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
         }
     }
 
-    private fun extractSourcesEntry(document: Document): List<URL> {
+    private fun extractSourcesEntry(document: Document): List<URI> {
         val id = document.select("section[class=sidebarStats]").attr("data-url-slug")
 
-        return listOf(config.buildAnimeLinkUrl(id))
+        return listOf(config.buildAnimeLink(id))
     }
 
-    private fun extractSynonyms(document: Document): List<String> {
+    private fun extractSynonyms(document: Document): List<Title> {
         val heading = document.select("h2[class=aka]").text()
 
         val alternativeTitles = mutableListOf<String>()
@@ -166,20 +163,20 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
         return alternativeTitles
     }
 
-    private fun extractTags(document: Document): List<String> {
+    private fun extractTags(document: Document): List<Tag> {
         return document.select("div[class=tags]").select("a").map { it.text() }
     }
 
-    private fun extractRelatedAnime(document: Document): List<URL> {
+    private fun extractRelatedAnime(document: Document): List<URI> {
         return document.select("div#tabs--relations--anime > div")
             .select("a")
             .map { it.attr("href") }
             .map { it.replace("/anime/", "") }
-            .map { config.buildAnimeLinkUrl(it) }
+            .map { config.buildAnimeLink(it) }
     }
 
     private companion object {
-        private val NO_PIC = URL("https://anime-planet.com/inc/img/blank_main.jpg")
+        private val NO_PIC = URI("https://anime-planet.com/inc/img/blank_main.jpg")
         private const val TITLE_CONTAINING_AT_CHAR= "[email protected]"
         private const val SINGLE_SYNONYM = "Alt title:"
         private const val MULTIPLE_SYNONYMS = "Alt titles:"

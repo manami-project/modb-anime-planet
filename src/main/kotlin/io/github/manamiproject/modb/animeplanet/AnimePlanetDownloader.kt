@@ -29,7 +29,7 @@ public class AnimePlanetDownloader(
         log.debug("Downloading [animePlanetId={}]", id)
 
         val response = httpClient.get(
-            url = config.buildDataDownloadUrl(id),
+            url = config.buildDataDownloadLink(id).toURL(),
             headers = mapOf("host" to listOf("www.${config.hostname()}")),
             retryWith = config.hostname(),
         )
