@@ -122,8 +122,8 @@ public class AnimePlanetConverter(private val config: MetaDataProviderConfig = A
         val season = yearNode.next().next().text().trim().split(' ')
 
         return when {
-            season.size != 2 -> AnimeSeason(season = UNDEFINED, _year = year)
-            season.size == 2 -> AnimeSeason(season = AnimeSeason.Season.of(season[0]), _year = season[1].toInt())
+            season.size != 2 -> AnimeSeason(season = UNDEFINED, year = year)
+            season.size == 2 -> AnimeSeason(season = AnimeSeason.Season.of(season[0]), year = season[1].toInt())
             else -> AnimeSeason()
         }
     }
