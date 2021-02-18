@@ -18,6 +18,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import java.net.URI
 
 internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
@@ -72,7 +74,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
             get(urlPathEqualTo("/anime/$id")).willReturn(
                 aResponse()
                     .withHeader("Content-Type", "text/plain")
-                    .withStatus(500)
+                    .withStatus(599)
                     .withBody("Internal Server Error")
             )
         )
@@ -87,7 +89,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         }
 
         // then
-        assertThat(result).hasMessage("Unable to determine the correct case for [animePlanetId=$id], [responseCode=500]")
+        assertThat(result).hasMessage("Unable to determine the correct case for [animePlanetId=$id], [responseCode=599]")
     }
 
     @Test
@@ -122,8 +124,9 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         assertThat(result).hasMessage("Response body was blank for [animePlanetId=1535] with response code [200]")
     }
 
-    @Test
-    fun `pause and retry on response code 502`() {
+    @ParameterizedTest
+    @ValueSource(ints = [500, 502, 521])
+    fun `pause and retry on response code`(responseCode: Int) {
         // given
         val id = 1535
 
@@ -142,7 +145,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
                         .willReturn(
                                 aResponse()
                                         .withHeader("Content-Type", "text/html")
-                                        .withStatus(502)
+                                        .withStatus(responseCode)
                                         .withBody("<html></html>")
                         )
         )

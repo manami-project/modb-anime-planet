@@ -45,7 +45,7 @@ public class AnimePlanetDownloader(
     private fun registerRetryBehavior() {
         val retryBehaviorConfig = RetryBehavior(
                 waitDuration = { random(4000, 8000) },
-                retryOnResponsePredicate = { httpResponse -> httpResponse.code == 502 }
+                retryOnResponsePredicate = { httpResponse -> listOf(500, 502, 521).contains(httpResponse.code) }
         )
 
         RetryableRegistry.register(config.hostname(), retryBehaviorConfig)
