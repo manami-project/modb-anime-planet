@@ -18,9 +18,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.net.URI
 import java.time.Clock
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneOffset
 import java.time.ZoneOffset.UTC
 
 internal class AnimePlanetConverterTest {
@@ -109,7 +107,7 @@ internal class AnimePlanetConverterTest {
         }
 
         @Test
-        fun `1010 episodes`() {
+        fun `1015 and more episodes`() {
             // given
             val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = AnimePlanetConfig.hostname()
@@ -124,7 +122,7 @@ internal class AnimePlanetConverterTest {
             val result = converter.convert(testFileContent)
 
             // then
-            assertThat(result.episodes).isEqualTo(1010)
+            assertThat(result.episodes).isEqualTo(1015)
         }
 
         @Test
@@ -154,7 +152,7 @@ internal class AnimePlanetConverterTest {
                 override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
-            val testFileContent = loadTestResource("file_converter_tests/episodes/no_episode.html")
+            val testFileContent = loadTestResource("file_converter_tests/episodes/no_episodes.html")
 
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
@@ -360,28 +358,8 @@ internal class AnimePlanetConverterTest {
             val result = converter.convert(testFileContent)
 
             // then
-            assertThat(result.picture.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/natsumes-book-of-friends-season-6-specials-9230.jpg")
-            assertThat(result.thumbnail.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/thumbs/natsumes-book-of-friends-season-6-specials-9230.jpg")
-        }
-
-        @Test
-        fun `other screenshots available`() {
-            // given
-            val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun hostname(): Hostname = AnimePlanetConfig.hostname()
-                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
-            }
-
-            val testFileContent = loadTestResource("file_converter_tests/picture_and_thumbnail/other_screenshots_available.html")
-
-            val converter = AnimePlanetConverter(testAnimePlanetConfig)
-
-            // when
-            val result = converter.convert(testFileContent)
-
-            // then
-            assertThat(result.picture.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/40meterp-heartbreak-monochrome-6395.jpg")
-            assertThat(result.thumbnail.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/thumbs/40meterp-heartbreak-monochrome-6395.jpg")
+            assertThat(result.picture.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/9230.jpg")
+            assertThat(result.thumbnail.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/thumbs/9230.jpg")
         }
 
         @Test
@@ -435,7 +413,7 @@ internal class AnimePlanetConverterTest {
                 override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
-            val testFileContent = loadTestResource("file_converter_tests/status/year_-_same_year.html")
+            val testFileContent = loadTestResource("file_converter_tests/status/year_is_current_year.html")
 
             val converter = AnimePlanetConverter(
                 config = testAnimePlanetConfig,
@@ -457,7 +435,7 @@ internal class AnimePlanetConverterTest {
                 override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
-            val testFileContent = loadTestResource("file_converter_tests/status/year_-_year_in_the_future.html")
+            val testFileContent = loadTestResource("file_converter_tests/status/year_in_the_future.html")
 
             val converter = AnimePlanetConverter(
                 config = testAnimePlanetConfig,
@@ -479,7 +457,7 @@ internal class AnimePlanetConverterTest {
                 override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
             }
 
-            val testFileContent = loadTestResource("file_converter_tests/status/year_-_year_in_the_past.html")
+            val testFileContent = loadTestResource("file_converter_tests/status/year_in_the_past.html")
 
             val converter = AnimePlanetConverter(
                 config = testAnimePlanetConfig,
