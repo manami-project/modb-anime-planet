@@ -35,7 +35,7 @@ dependencies {
     api("io.github.manamiproject:modb-core:6.0.0")
 
     implementation(platform(kotlin("bom")))
-    implementation("org.jsoup:jsoup:1.14.1")
+    implementation("org.jsoup:jsoup:1.14.2")
 
     testImplementation("ch.qos.logback:logback-classic:1.2.5")
     testImplementation("io.github.manamiproject:modb-test:1.2.7")
