@@ -26,7 +26,7 @@ public class AnimePlanetDownloader(
     }
 
     override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String {
-        log.debug("Downloading [animePlanetId={}]", id)
+        log.debug { "Downloading [animePlanetId=$id]" }
 
         val response = httpClient.get(
             url = config.buildDataDownloadLink(id).toURL(),
