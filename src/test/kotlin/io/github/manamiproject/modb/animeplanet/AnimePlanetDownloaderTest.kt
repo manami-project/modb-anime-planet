@@ -8,14 +8,13 @@ import io.github.manamiproject.modb.core.config.FileSuffix
 import io.github.manamiproject.modb.core.config.Hostname
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.extensions.EMPTY
-import io.github.manamiproject.modb.core.extensions.readFile
 import io.github.manamiproject.modb.core.extensions.toAnimeId
 import io.github.manamiproject.modb.core.httpclient.APPLICATION_JSON
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.test.MockServerTestCase
 import io.github.manamiproject.modb.test.WireMockServerCreator
+import io.github.manamiproject.modb.test.loadTestResource
 import io.github.manamiproject.modb.test.shouldNotBeInvoked
-import io.github.manamiproject.modb.test.testResource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -192,7 +191,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
                 aResponse()
                     .withHeader("Content-Type", APPLICATION_JSON)
                     .withStatus(200)
-                    .withBody(testResource("downloader_tests/dead-entry.html").readFile())
+                    .withBody(loadTestResource("downloader_tests/dead-entry.html"))
             )
         )
 
