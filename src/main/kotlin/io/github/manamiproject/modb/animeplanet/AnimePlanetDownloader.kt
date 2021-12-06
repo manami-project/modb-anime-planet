@@ -3,6 +3,7 @@ package io.github.manamiproject.modb.animeplanet
 import io.github.manamiproject.modb.core.config.AnimeId
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.downloader.Downloader
+import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.httpclient.DefaultHttpClient
 import io.github.manamiproject.modb.core.httpclient.HttpClient
 import io.github.manamiproject.modb.core.httpclient.retry.RetryBehavior
@@ -35,6 +36,11 @@ public class AnimePlanetDownloader(
         )
 
         check(response.body.isNotBlank()) { "Response body was blank for [animePlanetId=$id] with response code [${response.code}]" }
+
+        if (response.body.contains("You searched for") && response.body.contains("...but we couldn't find anything.")) {
+            onDeadEntry.invoke(id)
+            return EMPTY
+        }
 
         return when(response.code) {
             200 -> response.body
