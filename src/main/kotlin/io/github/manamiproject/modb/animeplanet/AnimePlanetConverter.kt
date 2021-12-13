@@ -184,9 +184,9 @@ public class AnimePlanetConverter(
     }
 
     private fun extractSourcesEntry(document: Document): List<URI> {
-        val id = document.select("section[class=sidebarStats]").attr("data-url-slug")
+        val uri = document.select("link[rel=canonical]").attr("href").replace("www.", EMPTY)
 
-        return listOf(config.buildAnimeLink(id))
+        return listOf(URI(uri))
     }
 
     private fun extractSynonyms(document: Document): List<Title> {
