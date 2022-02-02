@@ -122,7 +122,7 @@ internal class AnimePlanetConverterTest {
             val result = converter.convert(testFileContent)
 
             // then
-            assertThat(result.episodes).isEqualTo(1015)
+            assertThat(result.episodes).isEqualTo(1036)
         }
 
         @Test
@@ -932,6 +932,7 @@ internal class AnimePlanetConverterTest {
             assertThat(result.relatedAnime).containsExactly(
                 URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-entertainment-district-arc"),
                 URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-movie-mugen-train"),
+                URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-mugen-train"),
                 URI("https://anime-planet.com/anime/kimetsu-gakuen-valentine-hen"),
             )
         }
