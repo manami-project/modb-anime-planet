@@ -358,8 +358,8 @@ internal class AnimePlanetConverterTest {
             val result = converter.convert(testFileContent)
 
             // then
-            assertThat(result.picture.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/9230.jpg")
-            assertThat(result.thumbnail.toString()).isEqualTo("https://anime-planet.com/images/anime/covers/thumbs/9230.jpg")
+            assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1.jpg?t=1625781902")
+            assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1-190x242.jpg?t=1625897886")
         }
 
         @Test
@@ -378,8 +378,8 @@ internal class AnimePlanetConverterTest {
             val result = converter.convert(testFileContent)
 
             // then
-            assertThat(result.picture.toString()).isEqualTo("https://anime-planet.com/inc/img/blank_main.jpg")
-            assertThat(result.thumbnail.toString()).isEqualTo("https://anime-planet.com/inc/img/blank_main.jpg")
+            assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
+            assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
         }
     }
 

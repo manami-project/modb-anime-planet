@@ -32,14 +32,13 @@ public class AnimePlanetConverter(
     override fun convert(rawContent: String): Anime {
 
         val document = Jsoup.parse(rawContent)
-        val thumbnail = extractThumbnail(document)
 
         return Anime(
             _title = extractTitle(document),
             episodes = extractEpisodes(document),
             type = extractType(document),
-            picture = extractPicture(thumbnail),
-            thumbnail = thumbnail,
+            picture = extractPicture(document),
+            thumbnail = extractThumbnail(document),
             status = extractStatus(document),
             duration = extractDuration(document),
             animeSeason = extractAnimeSeason(document)
@@ -137,26 +136,22 @@ public class AnimePlanetConverter(
     }
 
     private fun extractThumbnail(document: Document): URI {
-        val textValue = document.select("img[itemprop=image]").attr("src").let {
-            Regex(".*?\\.jpg").find(it)?.value ?: EMPTY
-        }
+        val textValue = document.select("img[itemprop=image]").attr("src")
 
         return if (textValue.isNotBlank()) {
-            if (textValue.startsWith('/')) {
-                URI("https://${config.hostname()}$textValue")
-            } else {
-                URI("https://${config.hostname()}/$textValue")
-            }
+            URI(textValue)
         } else {
             NO_PIC
         }
     }
 
-    private fun extractPicture(uri: URI): URI {
-        return if (uri == NO_PIC) {
-            NO_PIC
+    private fun extractPicture(document: Document): URI {
+        val textValue = document.select("meta[property=og:image]").attr("content")
+
+        return if (textValue.isNotBlank()) {
+            URI(textValue)
         } else {
-            URI(uri.toString().replace("/covers/thumbs","/covers"))
+            NO_PIC
         }
     }
 
@@ -178,8 +173,7 @@ public class AnimePlanetConverter(
 
         return when {
             season.size != 2 -> AnimeSeason(season = UNDEFINED, year = year)
-            season.size == 2 -> AnimeSeason(season = AnimeSeason.Season.of(season[0]), year = season[1].toInt())
-            else -> AnimeSeason()
+            else -> AnimeSeason(season = AnimeSeason.Season.of(season[0]), year = season[1].toInt())
         }
     }
 
@@ -232,7 +226,7 @@ public class AnimePlanetConverter(
 
     private companion object {
         private val REGEX_YEAR = Regex("[0-9]{4}")
-        private val NO_PIC = URI("https://anime-planet.com/inc/img/blank_main.jpg")
+        private val NO_PIC = URI("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
         private const val TITLE_CONTAINING_AT_CHAR= "[email protected]"
         private const val SINGLE_SYNONYM = "Alt title:"
         private const val MULTIPLE_SYNONYMS = "Alt titles:"
