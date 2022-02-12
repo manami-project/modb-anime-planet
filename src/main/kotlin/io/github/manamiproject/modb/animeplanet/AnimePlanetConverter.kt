@@ -3,7 +3,6 @@ package io.github.manamiproject.modb.animeplanet
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
 import io.github.manamiproject.modb.core.extensions.EMPTY
-import io.github.manamiproject.modb.core.extensions.readFile
 import io.github.manamiproject.modb.core.models.*
 import io.github.manamiproject.modb.core.models.Anime.Status.*
 import io.github.manamiproject.modb.core.models.Anime.Status.UNKNOWN
@@ -14,10 +13,8 @@ import io.github.manamiproject.modb.core.models.Duration.TimeUnit.MINUTES
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.net.URI
-import java.nio.file.Paths
 import java.time.Clock
 import java.time.LocalDate
-import kotlin.io.path.useDirectoryEntries
 
 /**
  * Converts raw data to an [Anime].
@@ -32,13 +29,14 @@ public class AnimePlanetConverter(
     override fun convert(rawContent: String): Anime {
 
         val document = Jsoup.parse(rawContent)
+        val thumbnail = extractThumbnail(document)
 
         return Anime(
             _title = extractTitle(document),
             episodes = extractEpisodes(document),
             type = extractType(document),
-            picture = extractPicture(document),
-            thumbnail = extractThumbnail(document),
+            picture = extractPicture(thumbnail),
+            thumbnail = thumbnail,
             status = extractStatus(document),
             duration = extractDuration(document),
             animeSeason = extractAnimeSeason(document)
@@ -145,11 +143,9 @@ public class AnimePlanetConverter(
         }
     }
 
-    private fun extractPicture(document: Document): URI {
-        val textValue = document.select("meta[property=og:image]").attr("content")
-
-        return if (textValue.isNotBlank()) {
-            URI(textValue)
+    private fun extractPicture(thumbnail: URI): URI {
+        return if (thumbnail != NO_PIC) {
+            URI(thumbnail.toString().replace(Regex("-\\d+x\\d+"), EMPTY))
         } else {
             NO_PIC
         }

@@ -358,7 +358,7 @@ internal class AnimePlanetConverterTest {
             val result = converter.convert(testFileContent)
 
             // then
-            assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1.jpg?t=1625781902")
+            assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1.jpg?t=1625897886")
             assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1-190x242.jpg?t=1625897886")
         }
 
@@ -380,6 +380,26 @@ internal class AnimePlanetConverterTest {
             // then
             assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
             assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
+        }
+
+        @Test
+        fun `ensure that the primary screenshot is extracted as picture`() {
+            // given
+            val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = AnimePlanetConfig.hostname()
+                override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
+            }
+
+            val testFileContent = loadTestResource("file_converter_tests/picture_and_thumbnail/ensure_primary_screenshot_as_picture.html")
+
+            val converter = AnimePlanetConverter(testAnimePlanetConfig)
+
+            // when
+            val result = converter.convert(testFileContent)
+
+            // then
+            assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/ado-usseewa-1.webp?t=1637018167")
+            assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/ado-usseewa-1-285x399.webp?t=1637018167")
         }
     }
 
