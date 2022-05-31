@@ -34,7 +34,7 @@ version = project.findProperty("release.version") as String? ?: ""
 
 dependencies {
     api(kotlin("stdlib-jdk8"))
-    api("io.github.manamiproject:modb-core:7.2.1")
+    api("io.github.manamiproject:modb-core:7.2.2")
 
     implementation(platform(kotlin("bom")))
     implementation("org.jsoup:jsoup:1.15.1")
