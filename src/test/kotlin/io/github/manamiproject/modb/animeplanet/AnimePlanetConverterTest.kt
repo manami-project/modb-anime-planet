@@ -13,6 +13,7 @@ import io.github.manamiproject.modb.core.models.Duration
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.HOURS
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.MINUTES
 import io.github.manamiproject.modb.test.loadTestResource
+import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -39,7 +40,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.title).isEqualTo("PriPara Movie: Minna no Akogare♪ Let's Go☆Prix Paris")
@@ -58,7 +61,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.title).isEqualTo("Malice@Doll")
@@ -77,7 +82,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.title).isEqualTo("The iDOLM@STER Million Live!")
@@ -100,7 +107,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.episodes).isOne()
@@ -119,7 +128,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.episodes).isEqualTo(1036)
@@ -138,7 +149,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.episodes).isEqualTo(25)
@@ -157,7 +170,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.episodes).isZero()
@@ -180,7 +195,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(ONA)
@@ -199,7 +216,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(SPECIAL)
@@ -218,7 +237,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(TV)
@@ -237,7 +258,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(OVA)
@@ -256,7 +279,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(SPECIAL)
@@ -275,7 +300,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(SPECIAL)
@@ -294,7 +321,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(MOVIE)
@@ -313,7 +342,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(SPECIAL)
@@ -332,7 +363,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.type).isEqualTo(TV)
@@ -355,7 +388,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1.jpg?t=1625897886")
@@ -375,7 +410,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
@@ -395,7 +432,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/ado-usseewa-1.webp?t=1637018167")
@@ -419,7 +458,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(UPCOMING)
@@ -441,7 +482,9 @@ internal class AnimePlanetConverterTest {
             )
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(Anime.Status.UNKNOWN)
@@ -463,7 +506,9 @@ internal class AnimePlanetConverterTest {
             )
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(UPCOMING)
@@ -485,7 +530,9 @@ internal class AnimePlanetConverterTest {
             )
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(FINISHED)
@@ -507,7 +554,9 @@ internal class AnimePlanetConverterTest {
             )
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(ONGOING)
@@ -529,7 +578,9 @@ internal class AnimePlanetConverterTest {
             )
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(UNKNOWN)
@@ -551,7 +602,9 @@ internal class AnimePlanetConverterTest {
             )
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(FINISHED)
@@ -573,7 +626,9 @@ internal class AnimePlanetConverterTest {
             )
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.status).isEqualTo(UNKNOWN)
@@ -596,7 +651,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(1, HOURS))
@@ -615,7 +672,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(1, MINUTES))
@@ -634,7 +693,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(2, HOURS))
@@ -653,7 +714,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(135, MINUTES))
@@ -672,7 +735,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(10, MINUTES))
@@ -695,7 +760,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.animeSeason).isEqualTo(AnimeSeason(UNDEFINED, 2016))
@@ -714,7 +781,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.animeSeason).isEqualTo(AnimeSeason(SUMMER, 2020))
@@ -733,7 +802,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.animeSeason).isEqualTo(AnimeSeason(SPRING, 2020))
@@ -752,7 +823,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.animeSeason).isEqualTo(AnimeSeason(WINTER, 2020))
@@ -771,7 +844,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.animeSeason).isEqualTo(AnimeSeason(FALL, 2020))
@@ -790,7 +865,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.animeSeason).isEqualTo(AnimeSeason(UNDEFINED, 0))
@@ -813,7 +890,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.sources).containsExactly(URI("https://anime-planet.com/anime/code-geass-lelouch-of-the-rebellion-r2"))
@@ -836,7 +915,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.synonyms).containsExactly("Kimi no Na wa.")
@@ -855,7 +936,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.synonyms).isEmpty()
@@ -874,7 +957,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.synonyms).containsExactly("GJ Club@")
@@ -893,7 +978,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -919,7 +1006,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.relatedAnime).containsExactly(
@@ -946,7 +1035,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.relatedAnime).containsExactly(
@@ -970,7 +1061,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.relatedAnime).isEmpty()
@@ -993,7 +1086,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.tags).containsExactly(
@@ -1027,7 +1122,9 @@ internal class AnimePlanetConverterTest {
             val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
             // when
-            val result = converter.convert(testFileContent)
+            val result = runBlocking {
+                converter.convertSuspendable(testFileContent)
+            }
 
             // then
             assertThat(result.tags).isEmpty()

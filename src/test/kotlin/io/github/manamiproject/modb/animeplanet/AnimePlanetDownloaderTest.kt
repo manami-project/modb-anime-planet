@@ -11,14 +11,11 @@ import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.extensions.toAnimeId
 import io.github.manamiproject.modb.core.httpclient.APPLICATION_JSON
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
-import io.github.manamiproject.modb.test.MockServerTestCase
-import io.github.manamiproject.modb.test.WireMockServerCreator
-import io.github.manamiproject.modb.test.loadTestResource
-import io.github.manamiproject.modb.test.shouldNotBeInvoked
+import io.github.manamiproject.modb.test.*
+import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.net.URI
@@ -34,7 +31,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
     @Test
     fun `successfully download an anime`() {
         // given
-        val testConfig = object: MetaDataProviderConfig by AnimePlanetConfig {
+        val testConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
             override fun buildDataDownloadLink(id: String): URI = URI("http://localhost:$port/anime/$id")
         }
@@ -53,8 +50,10 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         val downloader = AnimePlanetDownloader(testConfig)
 
         // when
-        val result = downloader.download(id) {
-            shouldNotBeInvoked()
+        val result = runBlocking {
+            downloader.downloadSuspendable(id) {
+                shouldNotBeInvoked()
+            }
         }
 
         // then
@@ -64,9 +63,10 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
     @Test
     fun `unhandled response code throws exception`() {
         // given
-        val testConfig = object: MetaDataProviderConfig by AnimePlanetConfig {
+        val testConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
             override fun buildDataDownloadLink(id: String): URI = URI("http://localhost:$port/anime/$id")
+            override fun isTestContext(): Boolean = true
         }
 
         val id = "black-clover"
@@ -83,8 +83,8 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         val downloader = AnimePlanetDownloader(testConfig)
 
         // when
-        val result = assertThrows<IllegalStateException> {
-            downloader.download(id) {
+        val result = exceptionExpected<IllegalStateException> {
+            downloader.downloadSuspendable(id) {
                 shouldNotBeInvoked()
             }
         }
@@ -117,8 +117,8 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         val downloader = AnimePlanetDownloader(testAnidbConfig)
 
         // when
-        val result = assertThrows<IllegalStateException> {
-            downloader.download(id.toAnimeId()) { shouldNotBeInvoked() }
+        val result = exceptionExpected<IllegalStateException> {
+            downloader.downloadSuspendable(id.toAnimeId()) { shouldNotBeInvoked() }
         }
 
         // then
@@ -168,8 +168,10 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         val downloader = AnimePlanetDownloader(testAnimePlanetConfig)
 
         // when
-        val result = downloader.download(id.toString()) {
-            shouldNotBeInvoked()
+        val result = runBlocking {
+            downloader.downloadSuspendable(id.toString()) {
+                shouldNotBeInvoked()
+            }
         }
 
         // then
@@ -179,7 +181,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
     @Test
     fun `invoke lambda on finding a dead entry`() {
         // given
-        val testConfig = object: MetaDataProviderConfig by AnimePlanetConfig {
+        val testConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
             override fun buildDataDownloadLink(id: String): URI = URI("http://localhost:$port/anime/$id")
         }
@@ -200,8 +202,10 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         var deadEntryHasBeenInvoked = false
 
         // when
-        val result = downloader.download(id) {
-            deadEntryHasBeenInvoked = true
+        val result = runBlocking {
+            downloader.downloadSuspendable(id) {
+                deadEntryHasBeenInvoked = true
+            }
         }
 
         // then
