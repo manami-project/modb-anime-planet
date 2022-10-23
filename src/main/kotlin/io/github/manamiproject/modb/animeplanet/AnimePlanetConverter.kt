@@ -2,6 +2,7 @@ package io.github.manamiproject.modb.animeplanet
 
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
+import io.github.manamiproject.modb.core.coroutines.ModbDispatchers.LIMITED_CPU
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.models.*
 import io.github.manamiproject.modb.core.models.Anime.Status.*
@@ -10,6 +11,8 @@ import io.github.manamiproject.modb.core.models.Anime.Type
 import io.github.manamiproject.modb.core.models.Anime.Type.*
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season.UNDEFINED
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.MINUTES
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.net.URI
@@ -26,12 +29,18 @@ public class AnimePlanetConverter(
     private val clock: Clock = Clock.systemUTC(),
 ) : AnimeConverter {
 
-    override fun convert(rawContent: String): Anime {
+    @Deprecated("Use coroutines",
+        ReplaceWith("runBlocking { convertSuspendable(rawContent) }", "kotlinx.coroutines.runBlocking")
+    )
+    override fun convert(rawContent: String): Anime = runBlocking {
+        convertSuspendable(rawContent)
+    }
 
+    override suspend fun convertSuspendable(rawContent: String): Anime = withContext(LIMITED_CPU) {
         val document = Jsoup.parse(rawContent)
         val thumbnail = extractThumbnail(document)
 
-        return Anime(
+        return@withContext Anime(
             _title = extractTitle(document),
             episodes = extractEpisodes(document),
             type = extractType(document),
