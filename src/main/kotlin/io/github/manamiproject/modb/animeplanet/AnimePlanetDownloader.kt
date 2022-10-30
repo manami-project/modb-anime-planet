@@ -31,9 +31,7 @@ public class AnimePlanetDownloader(
         registerRetryBehavior()
     }
 
-    @Deprecated("Use coroutines",
-        ReplaceWith("runBlocking { downloadSuspendable(id, onDeadEntry) }", "kotlinx.coroutines.runBlocking")
-    )
+    @Deprecated("Use coroutines", ReplaceWith(EMPTY))
     override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String = runBlocking {
         downloadSuspendable(id, onDeadEntry)
     }
