@@ -11,7 +11,6 @@ import io.github.manamiproject.modb.core.httpclient.retry.RetryBehavior
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 import io.github.manamiproject.modb.core.random
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.toDuration
@@ -31,15 +30,10 @@ public class AnimePlanetDownloader(
         registerRetryBehavior()
     }
 
-    @Deprecated("Use coroutines", ReplaceWith(EMPTY))
-    override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String = runBlocking {
-        downloadSuspendable(id, onDeadEntry)
-    }
-
-    override suspend fun downloadSuspendable(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String = withContext(LIMITED_NETWORK) {
+    override suspend fun download(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String = withContext(LIMITED_NETWORK) {
         log.debug { "Downloading [animePlanetId=$id]" }
 
-        val response = httpClient.getSuspedable(
+        val response = httpClient.get(
             url = config.buildDataDownloadLink(id).toURL(),
             headers = mapOf("host" to listOf("www.${config.hostname()}")),
             retryWith = config.hostname(),

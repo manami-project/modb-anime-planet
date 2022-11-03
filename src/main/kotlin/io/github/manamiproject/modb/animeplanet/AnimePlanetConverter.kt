@@ -12,7 +12,6 @@ import io.github.manamiproject.modb.core.models.Anime.Type.*
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season.UNDEFINED
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.MINUTES
 import io.github.manamiproject.modb.core.parseHtml
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.jsoup.nodes.Document
 import java.net.URI
@@ -29,12 +28,7 @@ public class AnimePlanetConverter(
     private val clock: Clock = Clock.systemUTC(),
 ) : AnimeConverter {
 
-    @Deprecated("Use coroutines", ReplaceWith(EMPTY))
-    override fun convert(rawContent: String): Anime = runBlocking {
-        convertSuspendable(rawContent)
-    }
-
-    override suspend fun convertSuspendable(rawContent: String): Anime = withContext(LIMITED_CPU) {
+    override suspend fun convert(rawContent: String): Anime = withContext(LIMITED_CPU) {
         val document = parseHtml(rawContent)
         val thumbnail = extractThumbnail(document)
 
