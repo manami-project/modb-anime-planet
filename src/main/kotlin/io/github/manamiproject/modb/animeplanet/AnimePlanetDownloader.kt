@@ -23,7 +23,7 @@ import kotlin.time.toDuration
  */
 public class AnimePlanetDownloader(
     private val config: MetaDataProviderConfig,
-    private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext())
+    private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext()),
 ) : Downloader {
 
     init {

@@ -40,7 +40,7 @@ public class AnimePlanetConverter(
             thumbnail = thumbnail,
             status = extractStatus(document),
             duration = extractDuration(document),
-            animeSeason = extractAnimeSeason(document)
+            animeSeason = extractAnimeSeason(document),
         ).apply {
             addSources(extractSourcesEntry(document))
             addSynonyms(extractSynonyms(document))
