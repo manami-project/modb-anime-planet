@@ -557,7 +557,7 @@ internal class AnimePlanetConverterTest {
 
                 val converter = AnimePlanetConverter(
                     config = testAnimePlanetConfig,
-                    clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
+                    clock = Clock.fixed(LocalDate.of(2023, 4, 28).atStartOfDay().toInstant(UTC), UTC)
                 )
 
                 // when
@@ -582,7 +582,7 @@ internal class AnimePlanetConverterTest {
 
                 val converter = AnimePlanetConverter(
                     config = testAnimePlanetConfig,
-                    clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
+                    clock = Clock.fixed(LocalDate.of(2023, 4, 28).atStartOfDay().toInstant(UTC), UTC)
                 )
 
                 // when
