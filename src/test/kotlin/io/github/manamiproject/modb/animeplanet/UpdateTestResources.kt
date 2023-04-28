@@ -25,10 +25,11 @@ internal fun main() {
     
         downloader.download("pripara-movie-minna-no-akogare-lets-go-prix-paris").writeToFile(resourceFile("file_converter_tests/episodes/1_ep.html"))
         downloader.download("code-geass-lelouch-of-the-rebellion-r2").writeToFile(resourceFile("file_converter_tests/episodes/25_eps.html"))
-        downloader.download("detective-conan").writeToFile(resourceFile("file_converter_tests/episodes/1010+_eps.html"))
-        downloader.download("akebi-chan-no-sailor-fuku").writeToFile(resourceFile("file_converter_tests/episodes/no_episodes.html"))
+        downloader.download("detective-conan").writeToFile(resourceFile("file_converter_tests/episodes/1081+_eps.html"))
+        downloader.download("a-girl-her-guard-dog").writeToFile(resourceFile("file_converter_tests/episodes/no_episodes.html"))
     
-        downloader.download("kuma-kuma-kuma-bear-2").writeToFile(resourceFile("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html"))
+        downloader.download("ado-usseewa").writeToFile(resourceFile("file_converter_tests/picture_and_thumbnail/ensure_primary_screenshot_as_picture.html"))
+        downloader.download("dog-signal").writeToFile(resourceFile("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html"))
         downloader.download("natsumes-book-of-friends-season-6-specials").writeToFile(resourceFile("file_converter_tests/picture_and_thumbnail/picture_and_thumbnail_available.html"))
     
         downloader.download("mainichi-jk-kikaku").writeToFile(resourceFile("file_converter_tests/related_anime/no_related_anime.html"))
@@ -39,11 +40,11 @@ internal fun main() {
     
         downloader.download("blade-of-the-immortal-2019").writeToFile(resourceFile("file_converter_tests/status/range_-_ends_in_the_past.html"))
         downloader.download("attack-on-titan-the-final-season").writeToFile(resourceFile("file_converter_tests/status/range_-_ends_same_year.html"))
-        downloader.download("new-employee-hayato").writeToFile(resourceFile("file_converter_tests/status/range_to_unknown_-_starts_in_the_past.html"))
-        downloader.download("amemiya-san").writeToFile(resourceFile("file_converter_tests/status/range_to_unknown_-_starts_same_year.html"))
+        downloader.download("amemiya-san").writeToFile(resourceFile("file_converter_tests/status/range_to_unknown_-_starts_in_the_past.html"))
+        downloader.download("kubo-wont-let-me-be-invisible").writeToFile(resourceFile("file_converter_tests/status/range_to_unknown_-_starts_same_year.html"))
         downloader.download("the-elder-sister-like-one").writeToFile(resourceFile("file_converter_tests/status/tba.html"))
         downloader.download("laid-back-camp-2nd-season").writeToFile(resourceFile("file_converter_tests/status/year_is_current_year.html"))
-        downloader.download("attack-on-titan-the-final-season-part-ii").writeToFile(resourceFile("file_converter_tests/status/year_in_the_future.html"))
+        downloader.download("solo-leveling").writeToFile(resourceFile("file_converter_tests/status/year_in_the_future.html"))
         downloader.download("banner-of-the-stars").writeToFile(resourceFile("file_converter_tests/status/year_in_the_past.html"))
     
         downloader.download("star-blazers-space-battleship-yamato-2202-movie").writeToFile(resourceFile("file_converter_tests/synonyms/multiple_synonyms.html"))
@@ -61,7 +62,7 @@ internal fun main() {
         downloader.download("natsumes-book-of-friends-season-6-specials").writeToFile(resourceFile("file_converter_tests/type/dvd_special.html"))
         downloader.download("your-name").writeToFile(resourceFile("file_converter_tests/type/movie.html"))
         downloader.download("shelter").writeToFile(resourceFile("file_converter_tests/type/music_video.html"))
-        downloader.download("soredemo-ayumu-wa-yosetekuru").writeToFile(resourceFile("file_converter_tests/type/no_braces.html"))
+        downloader.download("dog-signal").writeToFile(resourceFile("file_converter_tests/type/no_braces.html"))
         downloader.download("gintama-jump-festa-2015").writeToFile(resourceFile("file_converter_tests/type/other.html"))
         downloader.download("rurouni-kenshin-tsuiokuhen").writeToFile(resourceFile("file_converter_tests/type/ova.html"))
         downloader.download("fullmetal-alchemist-brotherhood").writeToFile(resourceFile("file_converter_tests/type/tv.html"))

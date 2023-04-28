@@ -118,7 +118,7 @@ internal class AnimePlanetConverterTest {
         }
 
         @Test
-        fun `1015 and more episodes`() {
+        fun `1081 and more episodes`() {
             runBlocking {
                 // given
                 val testAnimePlanetConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -126,7 +126,7 @@ internal class AnimePlanetConverterTest {
                     override fun buildAnimeLink(id: AnimeId): URI = AnimePlanetConfig.buildAnimeLink(id)
                 }
 
-                val testFileContent = loadTestResource("file_converter_tests/episodes/1010+_eps.html")
+                val testFileContent = loadTestResource("file_converter_tests/episodes/1081+_eps.html")
 
                 val converter = AnimePlanetConverter(testAnimePlanetConfig)
 
@@ -134,7 +134,7 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.episodes).isEqualTo(1036)
+                assertThat(result.episodes).isEqualTo(1081)
             }
         }
 
@@ -418,8 +418,8 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
-                assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
+                assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-spring.png")
+                assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/images/anime/default/default-anime-spring.png")
             }
         }
 
@@ -1052,6 +1052,8 @@ internal class AnimePlanetConverterTest {
                     URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-entertainment-district-arc"),
                     URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-movie-mugen-train"),
                     URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-mugen-train"),
+                    URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-swordsmith-village-arc"),
+                    URI("https://anime-planet.com/anime/kimetsu-gakuen-monogatari-kimetsu-no-utage-tokubetsu-hen"),
                     URI("https://anime-planet.com/anime/kimetsu-gakuen-valentine-hen"),
                 )
             }
@@ -1101,6 +1103,7 @@ internal class AnimePlanetConverterTest {
                 // then
                 assertThat(result.tags).containsExactly(
                     "based on a manga",
+                    "child protagonists",
                     "dark fantasy",
                     "fantasy",
                     "horror",
@@ -1108,6 +1111,7 @@ internal class AnimePlanetConverterTest {
                     "mind games",
                     "mystery",
                     "noitamina",
+                    "orphanage",
                     "orphans",
                     "outside world",
                     "psychological",
