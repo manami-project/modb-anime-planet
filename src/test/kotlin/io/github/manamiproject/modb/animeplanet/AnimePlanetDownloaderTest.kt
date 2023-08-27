@@ -10,7 +10,6 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.extensions.toAnimeId
 import io.github.manamiproject.modb.core.httpclient.APPLICATION_JSON
-import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.test.*
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
@@ -21,12 +20,6 @@ import org.junit.jupiter.params.provider.ValueSource
 import java.net.URI
 
 internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
-
-    @AfterEach
-    override fun afterEach() {
-        serverInstance.stop()
-        RetryableRegistry.clear()
-    }
 
     @Test
     fun `successfully download an anime`() {
@@ -75,7 +68,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
             get(urlPathEqualTo("/anime/$id")).willReturn(
                 aResponse()
                     .withHeader("Content-Type", "text/plain")
-                    .withStatus(599)
+                    .withStatus(400)
                     .withBody("Internal Server Error")
             )
         )
@@ -90,7 +83,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
         }
 
         // then
-        assertThat(result).hasMessage("Unable to determine the correct case for [animePlanetId=$id], [responseCode=599]")
+        assertThat(result).hasMessage("Unable to determine the correct case for [animePlanetId=$id], [responseCode=400]")
     }
 
     @Test
