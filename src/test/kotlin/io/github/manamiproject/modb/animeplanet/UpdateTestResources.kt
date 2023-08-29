@@ -1,15 +1,15 @@
 package io.github.manamiproject.modb.animeplanet
 
+import io.github.manamiproject.modb.core.coroutines.CoroutineManager.runCoroutine
 import io.github.manamiproject.modb.core.extensions.writeToFile
 import io.github.manamiproject.modb.test.testResource
-import kotlinx.coroutines.runBlocking
 import java.nio.file.Path
 import java.nio.file.Paths
 
 internal fun main() {
     val downloader = AnimePlanetDownloader(AnimePlanetConfig)
     
-    runBlocking { 
+    runCoroutine {
         downloader.download("sleepy-princess-in-the-demon-castle").writeToFile(resourceFile("file_converter_tests/anime_season/fall.html"))
         downloader.download("a-whisker-away").writeToFile(resourceFile("file_converter_tests/anime_season/spring.html"))
         downloader.download("japan-sinks-2020").writeToFile(resourceFile("file_converter_tests/anime_season/summer.html"))
@@ -68,6 +68,8 @@ internal fun main() {
         downloader.download("fullmetal-alchemist-brotherhood").writeToFile(resourceFile("file_converter_tests/type/tv.html"))
         downloader.download("hanamonogatari").writeToFile(resourceFile("file_converter_tests/type/tv_special.html"))
         downloader.download("planetarian").writeToFile(resourceFile("file_converter_tests/type/web.html"))
+
+        println("Done")
     }
 }
 
