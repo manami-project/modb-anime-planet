@@ -8,10 +8,7 @@ import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.httpclient.DefaultHttpClient
 import io.github.manamiproject.modb.core.httpclient.HttpClient
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
-import io.github.manamiproject.modb.core.random
 import kotlinx.coroutines.withContext
-import kotlin.time.DurationUnit.MILLISECONDS
-import kotlin.time.toDuration
 
 /**
  * Downloads anime data from anime-planet.com
@@ -32,15 +29,15 @@ public class AnimePlanetDownloader(
             headers = mapOf("host" to listOf("www.${config.hostname()}")),
         )
 
-        check(response.body.isNotBlank()) { "Response body was blank for [animePlanetId=$id] with response code [${response.code}]" }
+        check(response.bodyAsText.isNotBlank()) { "Response body was blank for [animePlanetId=$id] with response code [${response.code}]" }
 
-        if (response.body.contains("You searched for") && response.body.contains("...but we couldn't find anything.")) {
+        if (response.bodyAsText.contains("You searched for") && response.bodyAsText.contains("...but we couldn't find anything.")) {
             onDeadEntry.invoke(id)
             return@withContext EMPTY
         }
 
         return@withContext when(response.code) {
-            200 -> response.body
+            200 -> response.bodyAsText
             else -> throw IllegalStateException("Unable to determine the correct case for [animePlanetId=$id], [responseCode=${response.code}]")
         }
     }
