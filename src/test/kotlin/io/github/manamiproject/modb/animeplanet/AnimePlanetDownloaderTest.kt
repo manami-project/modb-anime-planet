@@ -187,7 +187,7 @@ internal class AnimePlanetDownloaderTest : MockServerTestCase<WireMockServer> by
                     aResponse()
                         .withHeader("Content-Type", APPLICATION_JSON)
                         .withStatus(200)
-                        .withBody(loadTestResource("downloader_tests/dead-entry.html"))
+                        .withBody(loadTestResource<String>("downloader_tests/dead-entry.html"))
                 )
             )
 
