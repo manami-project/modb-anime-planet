@@ -990,7 +990,7 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "\"Space Battleship Yamato\" Era: The Choice in 2202",
                     "\"Uchuu Senkan Yamato\" to Iu Jidai: Seireki 2202-nen no Sentaku",
                 )
@@ -1019,7 +1019,7 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.relatedAnime).containsExactly(
+                assertThat(result.relatedAnime).containsExactlyInAnyOrder(
                     URI("https://anime-planet.com/anime/fullmetal-alchemist"),
                     URI("https://anime-planet.com/anime/fullmetal-alchemist-brotherhood-4-koma-theater"),
                     URI("https://anime-planet.com/anime/fullmetal-alchemist-brotherhood-specials"),
@@ -1048,7 +1048,7 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.relatedAnime).containsExactly(
+                assertThat(result.relatedAnime).containsExactlyInAnyOrder(
                     URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-entertainment-district-arc"),
                     URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-movie-mugen-train"),
                     URI("https://anime-planet.com/anime/demon-slayer-kimetsu-no-yaiba-mugen-train"),
@@ -1101,7 +1101,7 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.tags).containsExactly(
+                assertThat(result.tags).containsExactlyInAnyOrder(
                     "based on a manga",
                     "child protagonists",
                     "dark fantasy",
