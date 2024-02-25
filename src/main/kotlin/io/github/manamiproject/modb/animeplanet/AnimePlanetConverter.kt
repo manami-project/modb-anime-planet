@@ -44,7 +44,7 @@ public class AnimePlanetConverter(
         ).apply {
             addSources(extractSourcesEntry(document))
             addSynonyms(extractSynonyms(document))
-            addRelations(extractRelatedAnime(document))
+            addRelatedAnime(extractRelatedAnime(document))
             addTags(extractTags(document))
         }
     }
