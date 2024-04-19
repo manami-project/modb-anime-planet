@@ -4,16 +4,20 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
 import io.github.manamiproject.modb.core.coroutines.ModbDispatchers.LIMITED_CPU
 import io.github.manamiproject.modb.core.extensions.EMPTY
+import io.github.manamiproject.modb.core.extractor.DataExtractor
+import io.github.manamiproject.modb.core.extractor.ExtractionResult
+import io.github.manamiproject.modb.core.extractor.JsonDataExtractor
+import io.github.manamiproject.modb.core.extractor.XmlDataExtractor
 import io.github.manamiproject.modb.core.models.*
+import io.github.manamiproject.modb.core.models.Anime.Companion.NO_PICTURE
+import io.github.manamiproject.modb.core.models.Anime.Companion.NO_PICTURE_THUMBNAIL
 import io.github.manamiproject.modb.core.models.Anime.Status.*
 import io.github.manamiproject.modb.core.models.Anime.Status.UNKNOWN
 import io.github.manamiproject.modb.core.models.Anime.Type
 import io.github.manamiproject.modb.core.models.Anime.Type.*
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season.UNDEFINED
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.MINUTES
-import io.github.manamiproject.modb.core.parseHtml
 import kotlinx.coroutines.withContext
-import org.jsoup.nodes.Document
 import java.net.URI
 import java.time.Clock
 import java.time.LocalDate
@@ -25,36 +29,56 @@ import java.time.LocalDate
  */
 public class AnimePlanetConverter(
     private val config: MetaDataProviderConfig = AnimePlanetConfig,
+    private val xmlExtractor: DataExtractor = XmlDataExtractor,
+    private val jsonExtractor: DataExtractor = JsonDataExtractor,
     private val clock: Clock = Clock.systemUTC(),
 ) : AnimeConverter {
 
     override suspend fun convert(rawContent: String): Anime = withContext(LIMITED_CPU) {
-        val document = parseHtml(rawContent)
-        val thumbnail = extractThumbnail(document)
+        val data = xmlExtractor.extract(rawContent, mapOf(
+            "titleH1" to "//h1[@itemprop='name']/text()",
+            "jsonld" to "//script[@type='application/ld+json']/node()",
+            "titleMeta" to "//meta[@property='og:title']/@content",
+            "thumbnail" to "//img[@itemprop='image']/@src",
+            "typeEpisodesDuration" to "//span[@class='type']/text()",
+            "iconYear" to "//section[@class='pure-g entryBar']//span[@class='iconYear']/text()",
+            "seasonYear" to "//section[@class='pure-g entryBar']//span[@class='iconYear']/following-sibling::*/text()",
+            "source" to "//link[@rel='canonical']/@href",
+            "alternativeTitle" to "//h2[@class='aka']/text()",
+            "relatedAnime" to "//div[@id='tabs--relations--anime']/div//a/@href",
+            "tags" to "//div[contains(@class, 'tags')]//a/text()",
+        ))
+
+        val jsonld = data.string("jsonld")
+        val jsonldData = jsonExtractor.extract(jsonld, mapOf(
+            "title" to "$.name",
+            "alternateName" to "$.alternateName",
+            "source" to "$.url",
+            "image" to "$.image",
+            "datePublished" to "$.datePublished",
+            "genre" to "$.genre",
+        ))
+
+        val thumbnail = extractThumbnail(jsonldData, data)
 
         return@withContext Anime(
-            _title = extractTitle(document),
-            episodes = extractEpisodes(document),
-            type = extractType(document),
+            _title = extractTitle(jsonldData, data),
+            episodes = extractEpisodes(data),
+            type = extractType(data),
             picture = extractPicture(thumbnail),
             thumbnail = thumbnail,
-            status = extractStatus(document),
-            duration = extractDuration(document),
-            animeSeason = extractAnimeSeason(document),
-        ).apply {
-            addSources(extractSourcesEntry(document))
-            addSynonyms(extractSynonyms(document))
-            addRelatedAnime(extractRelatedAnime(document))
-            addTags(extractTags(document))
-        }
+            status = extractStatus(data),
+            duration = extractDuration(data),
+            animeSeason = extractAnimeSeason(jsonldData, data),
+            sources = extractSourcesEntry(jsonldData, data),
+            synonyms = extractSynonyms(jsonldData, data),
+            relatedAnime = extractRelatedAnime(data),
+            tags = extractTags(jsonldData, data),
+        )
     }
 
-    private fun extractStatus(document: Document): Anime.Status {
-        val value = document.select("section[class=pure-g entryBar]")
-            .select("span[class=iconYear]")
-            .text()
-            .trim()
-
+    private fun extractStatus(data: ExtractionResult): Anime.Status {
+        val value = data.stringOrDefault("iconYear")
         val currentYear = LocalDate.now(clock).year
 
         // shows only one year
@@ -95,29 +119,28 @@ public class AnimePlanetConverter(
         throw IllegalStateException("Unknown case for status [$value]")
     }
 
-    private fun extractTitle(document: Document): Title {
-        var title = document.select("h1[itemprop=name]").text().trim()
+    private fun extractTitle(jsonldData: ExtractionResult, data: ExtractionResult): Title {
+        var title = data.stringOrDefault("titleH1")
 
         if (title.contains(TITLE_CONTAINING_AT_CHAR)) {
-            val jsonld = document.select("script[type=application/ld+json]").html().toString()
-            title = Regex("\"name\":\"(?<title>.*?)\"").find(jsonld)?.groups?.get("title")?.value ?: EMPTY
+            title = jsonldData.stringOrDefault("title")
         }
 
-        if (title.isBlank()) {
-            title = document.select("meta[property=og:title]").attr("content")
+        if ((title.isBlank() || title.contains(TITLE_CONTAINING_AT_CHAR))) {
+            title = data.stringOrDefault("titleMeta")
         }
 
         return title
     }
 
-    private fun extractEpisodes(document: Document): Episodes {
-        return document.select("span[class=type]").text().let {
+    private fun extractEpisodes(data: ExtractionResult): Episodes {
+        return data.stringOrDefault("typeEpisodesDuration").let {
             Regex("\\d+").find(it)?.value?.toInt() ?: 0
         }
     }
 
-    private fun extractType(document: Document): Type {
-        val textValue = document.select("span[class=type]").text().substringBefore('(').lowercase().let {
+    private fun extractType(data: ExtractionResult): Type {
+        val textValue = data.string("typeEpisodesDuration").substringBefore('(').lowercase().let {
             Regex("([a-z]| )+").find(it)?.value?.trim() ?: EMPTY
         }
 
@@ -134,39 +157,53 @@ public class AnimePlanetConverter(
         }
     }
 
-    private fun extractThumbnail(document: Document): URI {
-        val textValue = document.select("img[itemprop=image]").attr("src")
+    private fun extractThumbnail(jsonldData: ExtractionResult, data: ExtractionResult): URI {
+        val textValue = data.stringOrDefault("thumbnail").ifBlank {
+            jsonldData.stringOrDefault("image")
+        }
 
         return if (textValue.isNotBlank()) {
-            URI(textValue)
+            URI(textValue.substringBefore("?t="))
         } else {
-            NO_PIC
+            NO_PICTURE
         }
     }
 
     private fun extractPicture(thumbnail: URI): URI {
-        return if (thumbnail != NO_PIC) {
+        return if (thumbnail != NO_PICTURE) {
             URI(thumbnail.toString().replace(Regex("-\\d+x\\d+"), EMPTY))
         } else {
-            NO_PIC
+            NO_PICTURE_THUMBNAIL
         }
     }
 
-    private fun extractDuration(document: Document): Duration {
-        val durationInMinutes = document.select("span[class=type]").text().let {
+    private fun extractDuration(data: ExtractionResult): Duration {
+        val durationInMinutes = data.string("typeEpisodesDuration").let {
             Regex("\\d+ min").find(it)?.value?.replace("min", EMPTY)?.trim()?.toInt() ?: 0
         }
 
         return Duration(durationInMinutes, MINUTES)
     }
 
-    private fun extractAnimeSeason(document: Document): AnimeSeason {
-        val yearNode = document.select("span[class=iconYear]")
-        val year = yearNode.text().trim().let {
-            it.toIntOrNull() ?: 0
+    private fun extractAnimeSeason(jsonldData: ExtractionResult, data: ExtractionResult): AnimeSeason {
+        val yearStr = data.stringOrDefault("iconYear").ifBlank {
+            jsonldData.stringOrDefault("datePublished")
+        }.trim()
+
+        val year = when {
+            REGEX_YEAR.matches(yearStr) -> yearStr.toInt()
+            yearStr.contains("-") -> {
+                val split = yearStr.split("-").first().trim()
+                if (REGEX_YEAR.matches(split)) {
+                    split.toInt()
+                } else {
+                    0
+                }
+            }
+            else -> 0
         }
 
-        val season = yearNode.next().next().text().trim().split(' ')
+        val season = data.string("seasonYear").trim().split(' ')
 
         return when {
             season.size != 2 -> AnimeSeason(season = UNDEFINED, year = year)
@@ -174,16 +211,18 @@ public class AnimePlanetConverter(
         }
     }
 
-    private fun extractSourcesEntry(document: Document): List<URI> {
-        val uri = document.select("link[rel=canonical]").attr("href").replace("www.", EMPTY)
+    private fun extractSourcesEntry(jsonldData: ExtractionResult, data: ExtractionResult): HashSet<URI> {
+        val uri = data.stringOrDefault("source").ifBlank {
+            jsonldData.stringOrDefault("source")
+        }.trim().replace("www.", EMPTY)
 
-        return listOf(URI(uri))
+        return hashSetOf(URI(uri))
     }
 
-    private fun extractSynonyms(document: Document): List<Title> {
-        val heading = document.select("h2[class=aka]").text()
+    private fun extractSynonyms(jsonldData: ExtractionResult, data: ExtractionResult): HashSet<Title> {
+        val heading = data.string("alternativeTitle")
 
-        val alternativeTitles = mutableListOf<String>()
+        val alternativeTitles = hashSetOf<String>()
 
         when {
             heading.startsWith(SINGLE_SYNONYM) -> alternativeTitles.add(heading.replace(SINGLE_SYNONYM, EMPTY).trim())
@@ -195,35 +234,41 @@ public class AnimePlanetConverter(
 
         if (alternativeTitles.any { it.contains(TITLE_CONTAINING_AT_CHAR) }) {
             alternativeTitles.removeIf { it.contains(TITLE_CONTAINING_AT_CHAR) }
-
-            val jsonld = document.select("script[type=application/ld+json]").html().toString()
-            alternativeTitles.add(
-                    Regex("\"alternateName\":\\[\"(?<alternativeTitle>.*?)\"\\]").find(jsonld)
-                    ?.groups
-                    ?.get("alternativeTitle")
-                    ?.value
-                    ?: EMPTY
-            )
+            jsonldData.listNotNull<Title>("alternateName").forEach { alternativeTitles.add(it) }
         }
 
         return alternativeTitles
     }
 
-    private fun extractTags(document: Document): List<Tag> {
-        return document.select("div[class=tags]").select("a").map { it.text() }
+    private fun extractTags(jsonldData: ExtractionResult, data: ExtractionResult): HashSet<Tag> {
+        val tags = if (jsonldData.notFound("genre")) {
+            hashSetOf()
+        } else {
+            jsonldData.listNotNull<Tag>("genre").map { it.trimEnd(',') }.toHashSet()
+        }
+
+        if (!data.notFound("tags")) {
+            data.listNotNull<Tag>("tags").map { it.trimEnd(',') }.forEach { tags.add(it) }
+        }
+
+        return tags
     }
 
-    private fun extractRelatedAnime(document: Document): List<URI> {
-        return document.select("div#tabs--relations--anime > div")
-            .select("a")
-            .map { it.attr("href") }
-            .map { it.replace("/anime/", EMPTY) }
-            .map { config.buildAnimeLink(it) }
+    private fun extractRelatedAnime(data: ExtractionResult): HashSet<URI> {
+        return if (data.notFound("relatedAnime")) {
+            hashSetOf()
+        } else {
+            data.listNotNull<String>("relatedAnime")
+                .map { it.replace("/anime/", EMPTY) }
+                .map { config.buildAnimeLink(it) }
+                .toHashSet()
+        }
+
+
     }
 
     private companion object {
-        private val REGEX_YEAR = Regex("[0-9]{4}")
-        private val NO_PIC = URI("https://cdn.anime-planet.com/images/anime/default/default-anime-winter.png")
+        private val REGEX_YEAR = Regex("\\d{4}")
         private const val TITLE_CONTAINING_AT_CHAR= "[email protected]"
         private const val SINGLE_SYNONYM = "Alt title:"
         private const val MULTIPLE_SYNONYMS = "Alt titles:"
