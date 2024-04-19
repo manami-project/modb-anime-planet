@@ -395,8 +395,8 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1.jpg?t=1625897886")
-                assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1-190x242.jpg?t=1625897886")
+                assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1.jpg")
+                assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/natsumes-book-of-friends-season-6-specials-1-190x242.jpg")
             }
         }
 
@@ -441,8 +441,8 @@ internal class AnimePlanetConverterTest {
                 val result = converter.convert(testFileContent)
 
                 // then
-                assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/ado-usseewa-1.webp?t=1637018167")
-                assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/ado-usseewa-1-285x399.webp?t=1637018167")
+                assertThat(result.picture.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/ado-usseewa-1.webp")
+                assertThat(result.thumbnail.toString()).isEqualTo("https://cdn.anime-planet.com/anime/primary/ado-usseewa-1-285x399.webp")
             }
         }
     }
@@ -1118,6 +1118,9 @@ internal class AnimePlanetConverterTest {
                     "sci fi",
                     "shounen",
                     "thriller",
+                    "domestic abuse",
+                    "self-harm",
+                    "mature themes",
                 )
             }
         }
