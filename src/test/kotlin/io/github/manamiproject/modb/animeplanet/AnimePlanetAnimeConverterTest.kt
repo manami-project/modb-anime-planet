@@ -22,7 +22,7 @@ import java.time.LocalDate
 import java.time.ZoneOffset.UTC
 import kotlin.test.Test
 
-internal class AnimePlanetConverterTest {
+internal class AnimePlanetAnimeConverterTest {
 
     @Nested
     inner class TitleTests {
@@ -38,7 +38,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/title/special_chars.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -60,7 +60,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/title/title_replaced_by_email_protected.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -82,7 +82,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/title/title_replaced_by_email_protected_no_jsonld.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -107,7 +107,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/episodes/1_ep.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -128,7 +128,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/episodes/1081+_eps.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -149,7 +149,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/episodes/25_eps.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -170,7 +170,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/episodes/no_episodes.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -195,7 +195,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/web.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -216,7 +216,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/tv_special.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -237,7 +237,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/tv.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -258,7 +258,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/ova.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -279,7 +279,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/other.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -300,7 +300,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/music_video.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -321,7 +321,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/movie.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -342,7 +342,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/dvd_special.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -363,7 +363,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/type/no_braces.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -389,7 +389,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/picture_and_thumbnail/picture_and_thumbnail_available.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -412,7 +412,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -435,7 +435,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/picture_and_thumbnail/ensure_primary_screenshot_as_picture.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -461,7 +461,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/tba.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -482,7 +482,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/year_is_current_year.html")
 
-                val converter = AnimePlanetConverter(
+                val converter = AnimePlanetAnimeConverter(
                     config = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
@@ -506,7 +506,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/year_in_the_future.html")
 
-                val converter = AnimePlanetConverter(
+                val converter = AnimePlanetAnimeConverter(
                     config = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
@@ -530,7 +530,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/year_in_the_past.html")
 
-                val converter = AnimePlanetConverter(
+                val converter = AnimePlanetAnimeConverter(
                     config = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
@@ -555,7 +555,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/status/range_to_unknown_-_starts_in_the_past.html")
 
-                val converter = AnimePlanetConverter(
+                val converter = AnimePlanetAnimeConverter(
                     config = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2023, 4, 28).atStartOfDay().toInstant(UTC), UTC)
                 )
@@ -580,7 +580,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/status/range_to_unknown_-_starts_same_year.html")
 
-                val converter = AnimePlanetConverter(
+                val converter = AnimePlanetAnimeConverter(
                     config = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2023, 4, 28).atStartOfDay().toInstant(UTC), UTC)
                 )
@@ -604,7 +604,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/range_-_ends_in_the_past.html")
 
-                val converter = AnimePlanetConverter(
+                val converter = AnimePlanetAnimeConverter(
                     config = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
@@ -628,7 +628,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/range_-_ends_same_year.html")
 
-                val converter = AnimePlanetConverter(
+                val converter = AnimePlanetAnimeConverter(
                     config = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
@@ -656,7 +656,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/duration/1_hour.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -677,7 +677,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/duration/1_min.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -698,7 +698,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/duration/2_hours.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -719,7 +719,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/duration/2_hours_15_min.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -740,7 +740,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/duration/10_min.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -765,7 +765,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/anime_season/year_only.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -786,7 +786,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/anime_season/summer.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -807,7 +807,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/anime_season/spring.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -828,7 +828,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/anime_season/winter.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -849,7 +849,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/anime_season/fall.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -870,7 +870,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/anime_season/tba.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -895,7 +895,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/sources/id.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -920,7 +920,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/synonyms/synonyms_available.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -941,7 +941,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/synonyms/synonyms_not_available.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -963,7 +963,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/synonyms/synonyms_replaced_by_email_protected.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -984,7 +984,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/synonyms/multiple_synonyms.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -1013,7 +1013,7 @@ internal class AnimePlanetConverterTest {
                 val testFileContent =
                     loadTestResource<String>("file_converter_tests/related_anime/same_franchise_and_other_franchise.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -1042,7 +1042,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/related_anime/same_franchise_only.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -1070,7 +1070,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/related_anime/no_related_anime.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -1095,7 +1095,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/tags/various_tags.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)
@@ -1136,7 +1136,7 @@ internal class AnimePlanetConverterTest {
 
                 val testFileContent = loadTestResource<String>("file_converter_tests/tags/no_tags.html")
 
-                val converter = AnimePlanetConverter(testAnimePlanetConfig)
+                val converter = AnimePlanetAnimeConverter(testAnimePlanetConfig)
 
                 // when
                 val result = converter.convert(testFileContent)

@@ -27,7 +27,7 @@ import java.time.LocalDate
  * @since 1.0.0
  * @param config Configuration for converting data.
  */
-public class AnimePlanetConverter(
+public class AnimePlanetAnimeConverter(
     private val config: MetaDataProviderConfig = AnimePlanetConfig,
     private val xmlExtractor: DataExtractor = XmlDataExtractor,
     private val jsonExtractor: DataExtractor = JsonDataExtractor,
