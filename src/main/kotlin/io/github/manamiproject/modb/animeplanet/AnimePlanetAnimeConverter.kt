@@ -4,6 +4,9 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
 import io.github.manamiproject.modb.core.coroutines.ModbDispatchers.LIMITED_CPU
 import io.github.manamiproject.modb.core.extensions.EMPTY
+import io.github.manamiproject.modb.core.extensions.eitherNullOrBlank
+import io.github.manamiproject.modb.core.extensions.neitherNullNorBlank
+import io.github.manamiproject.modb.core.extensions.remove
 import io.github.manamiproject.modb.core.extractor.DataExtractor
 import io.github.manamiproject.modb.core.extractor.ExtractionResult
 import io.github.manamiproject.modb.core.extractor.JsonDataExtractor
@@ -126,7 +129,7 @@ public class AnimePlanetAnimeConverter(
             title = jsonldData.stringOrDefault("title")
         }
 
-        if ((title.isBlank() || title.contains(TITLE_CONTAINING_AT_CHAR))) {
+        if ((title.eitherNullOrBlank() || title.contains(TITLE_CONTAINING_AT_CHAR))) {
             title = data.stringOrDefault("titleMeta")
         }
 
@@ -162,7 +165,7 @@ public class AnimePlanetAnimeConverter(
             jsonldData.stringOrDefault("image")
         }
 
-        return if (textValue.isNotBlank()) {
+        return if (textValue.neitherNullNorBlank()) {
             URI(textValue.substringBefore("?t="))
         } else {
             NO_PICTURE
@@ -179,7 +182,7 @@ public class AnimePlanetAnimeConverter(
 
     private fun extractDuration(data: ExtractionResult): Duration {
         val durationInMinutes = data.string("typeEpisodesDuration").let {
-            Regex("\\d+ min").find(it)?.value?.replace("min", EMPTY)?.trim()?.toInt() ?: 0
+            Regex("\\d+ min").find(it)?.value?.remove("min")?.trim()?.toInt() ?: 0
         }
 
         return Duration(durationInMinutes, MINUTES)
@@ -214,7 +217,7 @@ public class AnimePlanetAnimeConverter(
     private fun extractSourcesEntry(jsonldData: ExtractionResult, data: ExtractionResult): HashSet<URI> {
         val uri = data.stringOrDefault("source").ifBlank {
             jsonldData.stringOrDefault("source")
-        }.trim().replace("www.", EMPTY)
+        }.trim().remove("www.")
 
         return hashSetOf(URI(uri))
     }
@@ -225,8 +228,8 @@ public class AnimePlanetAnimeConverter(
         val alternativeTitles = hashSetOf<String>()
 
         when {
-            heading.startsWith(SINGLE_SYNONYM) -> alternativeTitles.add(heading.replace(SINGLE_SYNONYM, EMPTY).trim())
-            heading.startsWith(MULTIPLE_SYNONYMS) -> heading.replace(MULTIPLE_SYNONYMS, EMPTY).
+            heading.startsWith(SINGLE_SYNONYM) -> alternativeTitles.add(heading.remove(SINGLE_SYNONYM).trim())
+            heading.startsWith(MULTIPLE_SYNONYMS) -> heading.remove(MULTIPLE_SYNONYMS).
                 split(',')
                 .map { it.trim() }
                 .forEach { alternativeTitles.add(it) }
@@ -259,7 +262,7 @@ public class AnimePlanetAnimeConverter(
             hashSetOf()
         } else {
             data.listNotNull<String>("relatedAnime")
-                .map { it.replace("/anime/", EMPTY) }
+                .map { it.remove("/anime/") }
                 .map { config.buildAnimeLink(it) }
                 .toHashSet()
         }

@@ -5,6 +5,7 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.coroutines.ModbDispatchers.LIMITED_NETWORK
 import io.github.manamiproject.modb.core.downloader.Downloader
 import io.github.manamiproject.modb.core.extensions.EMPTY
+import io.github.manamiproject.modb.core.extensions.neitherNullNorBlank
 import io.github.manamiproject.modb.core.httpclient.DefaultHttpClient
 import io.github.manamiproject.modb.core.httpclient.HttpClient
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
@@ -29,7 +30,7 @@ public class AnimePlanetDownloader(
             headers = mapOf("host" to listOf("www.${config.hostname()}")),
         )
 
-        check(response.bodyAsText.isNotBlank()) { "Response body was blank for [animePlanetId=$id] with response code [${response.code}]" }
+        check(response.bodyAsText.neitherNullNorBlank()) { "Response body was blank for [animePlanetId=$id] with response code [${response.code}]" }
 
         if (response.bodyAsText.contains("You searched for") && response.bodyAsText.contains("...but we couldn't find anything.")) {
             onDeadEntry.invoke(id)
