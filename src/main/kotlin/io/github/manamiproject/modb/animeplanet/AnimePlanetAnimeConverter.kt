@@ -28,10 +28,10 @@ import java.time.LocalDate
 /**
  * Converts raw data to an [Anime].
  * @since 1.0.0
- * @param config Configuration for converting data.
+ * @param metaDataProviderConfig Configuration for converting data.
  */
 public class AnimePlanetAnimeConverter(
-    private val config: MetaDataProviderConfig = AnimePlanetConfig,
+    private val metaDataProviderConfig: MetaDataProviderConfig = AnimePlanetConfig,
     private val xmlExtractor: DataExtractor = XmlDataExtractor,
     private val jsonExtractor: DataExtractor = JsonDataExtractor,
     private val clock: Clock = Clock.systemUTC(),
@@ -263,7 +263,7 @@ public class AnimePlanetAnimeConverter(
         } else {
             data.listNotNull<String>("relatedAnime")
                 .map { it.remove("/anime/") }
-                .map { config.buildAnimeLink(it) }
+                .map { metaDataProviderConfig.buildAnimeLink(it) }
                 .toHashSet()
         }
 

@@ -483,7 +483,7 @@ internal class AnimePlanetAnimeConverterTest {
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/year_is_current_year.html")
 
                 val converter = AnimePlanetAnimeConverter(
-                    config = testAnimePlanetConfig,
+                    metaDataProviderConfig = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
 
@@ -507,7 +507,7 @@ internal class AnimePlanetAnimeConverterTest {
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/year_in_the_future.html")
 
                 val converter = AnimePlanetAnimeConverter(
-                    config = testAnimePlanetConfig,
+                    metaDataProviderConfig = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
 
@@ -531,7 +531,7 @@ internal class AnimePlanetAnimeConverterTest {
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/year_in_the_past.html")
 
                 val converter = AnimePlanetAnimeConverter(
-                    config = testAnimePlanetConfig,
+                    metaDataProviderConfig = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
 
@@ -556,7 +556,7 @@ internal class AnimePlanetAnimeConverterTest {
                     loadTestResource<String>("file_converter_tests/status/range_to_unknown_-_starts_in_the_past.html")
 
                 val converter = AnimePlanetAnimeConverter(
-                    config = testAnimePlanetConfig,
+                    metaDataProviderConfig = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2023, 4, 28).atStartOfDay().toInstant(UTC), UTC)
                 )
 
@@ -581,7 +581,7 @@ internal class AnimePlanetAnimeConverterTest {
                     loadTestResource<String>("file_converter_tests/status/range_to_unknown_-_starts_same_year.html")
 
                 val converter = AnimePlanetAnimeConverter(
-                    config = testAnimePlanetConfig,
+                    metaDataProviderConfig = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2023, 4, 28).atStartOfDay().toInstant(UTC), UTC)
                 )
 
@@ -605,7 +605,7 @@ internal class AnimePlanetAnimeConverterTest {
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/range_-_ends_in_the_past.html")
 
                 val converter = AnimePlanetAnimeConverter(
-                    config = testAnimePlanetConfig,
+                    metaDataProviderConfig = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
 
@@ -629,7 +629,7 @@ internal class AnimePlanetAnimeConverterTest {
                 val testFileContent = loadTestResource<String>("file_converter_tests/status/range_-_ends_same_year.html")
 
                 val converter = AnimePlanetAnimeConverter(
-                    config = testAnimePlanetConfig,
+                    metaDataProviderConfig = testAnimePlanetConfig,
                     clock = Clock.fixed(LocalDate.of(2021, 7, 9).atStartOfDay().toInstant(UTC), UTC)
                 )
 
