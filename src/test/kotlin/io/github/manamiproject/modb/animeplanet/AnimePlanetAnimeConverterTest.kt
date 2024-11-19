@@ -13,6 +13,7 @@ import io.github.manamiproject.modb.core.models.Duration
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.HOURS
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.MINUTES
 import io.github.manamiproject.modb.test.loadTestResource
+import io.github.manamiproject.modb.test.tempDirectory
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
@@ -1143,6 +1144,25 @@ internal class AnimePlanetAnimeConverterTest {
 
                 // then
                 assertThat(result.tags).isEmpty()
+            }
+        }
+    }
+
+    @Nested
+    inner class CompanionObjectTests {
+
+        @Test
+        fun `instance property always returns same instance`() {
+            tempDirectory {
+                // given
+                val previous = AnimePlanetAnimeConverter.instance
+
+                // when
+                val result = AnimePlanetAnimeConverter.instance
+
+                // then
+                assertThat(result).isExactlyInstanceOf(AnimePlanetAnimeConverter::class.java)
+                assertThat(result===previous).isTrue()
             }
         }
     }
