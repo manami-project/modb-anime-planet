@@ -270,10 +270,16 @@ public class AnimePlanetAnimeConverter(
 
     }
 
-    private companion object {
+    public companion object {
         private val REGEX_YEAR = Regex("\\d{4}")
         private const val TITLE_CONTAINING_AT_CHAR= "[email protected]"
         private const val SINGLE_SYNONYM = "Alt title:"
         private const val MULTIPLE_SYNONYMS = "Alt titles:"
+
+        /**
+         * Singleton of [AnimePlanetAnimeConverter]
+         * @since 1.0.0
+         */
+        public val instance: AnimePlanetAnimeConverter by lazy { AnimePlanetAnimeConverter() }
     }
 }
